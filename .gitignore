@@ -1,0 +1,19 @@
+# Sensitive files - DO NOT commit
+.credentials.json
+claude.json
+.env
+
+# Kubernetes secrets (actual values)
+k8s/secret.yaml
+
+# Logs
+*.log
+wakey-wakey-claude.log
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.swp
+*~

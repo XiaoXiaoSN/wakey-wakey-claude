@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: claude-config
+  namespace: default
+data:
+  claude.json: |
+    {
+      "numStartups": 1,
+      "installMethod": "native",
+      "autoUpdates": false,
+      "tipsHistory": {
+        "new-user-warmup": 1,
+        "plan-mode-for-complex-tasks": 1,
+        "terminal-setup": 1,
+        "memory-command": 1
+      },
+      "cachedStatsigGates": {
+        "tengu_log_1p_events": false,
+        "code_slack_app_install_banner": false,
+        "tengu_tool_pear": false,
+        "tengu_sumi": false,
+        "tengu_disable_bypass_permissions_mode": false,
+        "tengu_react_vulnerability_warning": false
+      },
+      "cachedDynamicConfigs": {
+        "tengu-top-of-feed-tip": {
+          "tip": "",
+          "color": ""
+        }
+      },
+      "sonnet45MigrationComplete": true,
+      "opus45MigrationComplete": true,
+      "officialMarketplaceAutoInstallAttempted": true,
+      "officialMarketplaceAutoInstalled": false,
+      "officialMarketplaceAutoInstallFailReason": "git_unavailable",
+      "autoUpdatesProtectedForNative": true,
+      "hasCompletedOnboarding": true,
+      "projects": {
+        "/": {
+          "allowedTools": [],
+          "mcpContextUris": [],
+          "mcpServers": {},
+          "enabledMcpjsonServers": [],
+          "disabledMcpjsonServers": [],
+          "hasTrustDialogAccepted": true,
+          "projectOnboardingSeenCount": 1,
+          "hasClaudeMdExternalIncludesApproved": false,
+          "hasClaudeMdExternalIncludesWarningShown": false,
+          "exampleFiles": [],
+          "reactVulnerabilityCache": {
+            "detected": false,
+            "package": null,
+            "packageName": null,
+            "version": null,
+            "packageManager": null
+          },
+          "lastCost": 0.01152235,
+          "lastAPIDuration": 11108,
+          "lastAPIDurationWithoutRetries": 11107,
+          "lastToolDuration": 0,
+          "lastDuration": 12869,
+          "lastLinesAdded": 0,
+          "lastLinesRemoved": 0,
+          "lastTotalInputTokens": 1575,
+          "lastTotalOutputTokens": 426,
+          "lastTotalCacheCreationInputTokens": 5225,
+          "lastTotalCacheReadInputTokens": 12861,
+          "lastTotalWebSearchRequests": 0,
+          "lastModelUsage": {
+            "claude-haiku-4-5-20251001": {
+              "inputTokens": 1575,
+              "outputTokens": 426,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0,
+              "webSearchRequests": 0,
+              "costUSD": 0.01152235
+            }
+          },
+          "lastSessionId": "44a03719-b259-4d50-a993-12d4c9df82f8"
+        }
+      },
+      "lastReleaseNotesSeen": "2.0.65"
+    }

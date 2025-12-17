@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wakey-wakey-claude
+  namespace: default
+spec:
+  # run at 5:00 AM every day (+08:00 timezone)
+  schedule: "0 21 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: wakey-wakey-claude
+            schedule: 5am
+        spec:
+          restartPolicy: Never
+
+          containers:
+          - name: wakey-wakey-claude
+            image: ghcr.io/xiaoxiaosn/wakey-wakey-claude:latest
+            imagePullPolicy: IfNotPresent
+
+            # override default CMD with minimal token usage
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Wakey wakey!"
+              claude -p --model haiku --max-turns 1 "reply hi only"
+
+            # set environment variables from secret
+            env:
+            - name: CLAUDE_CODE_OAUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: claude-token
+                  key: CLAUDE_CODE_OAUTH_TOKEN
+
+            # mount config only (credentials via env var)
+            volumeMounts:
+            - name: config
+              mountPath: /root/.claude.json
+              subPath: claude.json
+              readOnly: true
+
+            # set resource limits
+            resources:
+              requests:
+                memory: "64Mi"
+                cpu: "100m"
+              limits:
+                memory: "128Mi"
+                cpu: "200m"
+
+          volumes:
+          - name: config
+            configMap:
+              name: claude-config
+              items:
+              - key: claude.json
+                path: claude.json
