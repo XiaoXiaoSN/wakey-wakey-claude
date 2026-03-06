@@ -1,8 +1,12 @@
 name: Wakey Wakey Claude
 on:
   schedule:
-    # run at 5:00 AM every day (+08:00 timezone)
-    - cron: "0 21 * * *"
+    # run at:
+    #  - 05:00 AM every day (+08:00 timezone)
+    #  - 10:00 AM every day (+08:00 timezone)
+    #  - 15:00 AM every day (+08:00 timezone)
+    #  - 20:00 AM every day (+08:00 timezone)
+    - cron: "0 2,7,12,21 * * *"
   workflow_dispatch:
 
 jobs:
@@ -11,7 +15,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        
+
       - name: Install claude-code
         run: curl -fsSL https://claude.ai/install.sh | bash
 
@@ -21,4 +25,10 @@ jobs:
           ANTHROPIC_MODEL: haiku
           DISABLE_PROMPT_CACHING: 0
           PROMPT: "reply hi only"
-        run: claude -p --model $ANTHROPIC_MODEL --max-turns 1 "$PROMPT"
+        run: |
+          claude \
+            --system-prompt "" \
+            --tools "" \
+            --setting-sources "" \
+            --model $ANTHROPIC_MODEL \
+            --print "$PROMPT"
