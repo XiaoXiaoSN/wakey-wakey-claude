@@ -80,5 +80,11 @@ docker run --rm \
 ### minimal token usage
 
 ```bash
-claude -p --model haiku --max-turns 1 "reply hi only"
+claude \
+  --system-prompt "" \
+  --tools "" \
+  --setting-sources "" \
+  --max-turns 1 \
+  --model haiku \
+  --print "reply hi only"
 ```

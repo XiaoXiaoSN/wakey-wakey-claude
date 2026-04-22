@@ -66,10 +66,10 @@ echo ""
 echo -e "${YELLOW}Adding new crontab entries...${NC}"
 
 (crontab -l 2>/dev/null; echo "# Wakey Wakey Claude - 5 AM wake up") | crontab -
-(crontab -l; echo "0 21 * * * ${CLAUDE_PATH} -p --model $ANTHROPIC_MODEL --max-turns 1 \"$PROMPT\" >> ${LOG_PATH} 2>&1") | crontab -
+(crontab -l; echo "0 21 * * * ${CLAUDE_PATH} --system-prompt \"\" --tools \"\" --setting-sources \"\" --max-turns 1 --model $ANTHROPIC_MODEL --print \"$PROMPT\" >> ${LOG_PATH} 2>&1") | crontab -
 (crontab -l; echo "") | crontab -
 (crontab -l; echo "# Wakey Wakey Claude - 10 AM first reset") | crontab -
-(crontab -l; echo "0 18 * * * ${CLAUDE_PATH} -p --model $ANTHROPIC_MODEL --max-turns 1 \"$PROMPT\" >> ${LOG_PATH} 2>&1") | crontab -
+(crontab -l; echo "0 18 * * * ${CLAUDE_PATH} --system-prompt \"\" --tools \"\" --setting-sources \"\" --max-turns 1 --model $ANTHROPIC_MODEL --print \"$PROMPT\" >> ${LOG_PATH} 2>&1") | crontab -
 
 echo -e "${GREEN}✓ Crontab entries added${NC}"
 
@@ -83,7 +83,7 @@ echo "----------------------------------------"
 # test command
 echo ""
 echo -e "${YELLOW}Testing Claude command...${NC}"
-if ${CLAUDE_PATH} -p --model $ANTHROPIC_MODEL --max-turns 1 "$PROMPT" >> ${LOG_PATH} 2>&1; then
+if ${CLAUDE_PATH} --system-prompt "" --tools "" --setting-sources "" --max-turns 1 --model $ANTHROPIC_MODEL --print "$PROMPT" >> ${LOG_PATH} 2>&1; then
     echo -e "${GREEN}✓ Test successful! Check ${LOG_PATH} for output${NC}"
 else
     echo -e "${RED}✗ Test failed. Please check your Claude setup${NC}"
